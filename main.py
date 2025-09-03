@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_session
 from crud.user import create_user, get_user_by_username
 from schemas.user import UserCreate, UserRead
-from routes.product import router
+from routes import routers
 
 app = FastAPI()
 
@@ -31,4 +31,5 @@ async def get_user_endpoint(
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
-app.include_router(router, tags=["Products"])
+for router in routers:
+    app.include_router(router)
